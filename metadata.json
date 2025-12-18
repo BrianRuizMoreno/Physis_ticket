@@ -1,0 +1,7 @@
+{
+  "name": "Ticket Scanner Pro",
+  "description": "Aplicación de escaneo de recibos con procesamiento IA vía n8n y envío a ERP.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}

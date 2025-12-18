@@ -1,0 +1,102 @@
+<div class="min-h-screen flex items-center justify-center p-4">
+  
+  <!-- Main Card Container -->
+  <!-- Strict Styles: White bg, Sharp corners (rounded-none), specific shadow, border #f0f0f0 -->
+  <div class="w-full max-w-md bg-white rounded-none shadow-[0_10px_40px_rgba(0,0,0,0.1)] border border-[#f0f0f0] overflow-hidden flex flex-col min-h-[600px]">
+    
+    <!-- Header Section -->
+    <!-- Strict Styles: Bg #55c1e6 -->
+    <header class="bg-[#55c1e6] p-6 text-center border-b border-[#4db0d2]">
+      <!-- Title: Dark Blue #003366, Bold -->
+      <h1 class="text-[#003366] font-bold text-2xl tracking-tight">
+        Ticket Scanner
+      </h1>
+      <!-- Subtitle: White -->
+      <p class="text-white text-sm mt-1 opacity-90">
+        Gestión de Gastos Inteligente
+      </p>
+    </header>
+
+    <!-- Dynamic Content Area -->
+    <main class="flex-grow flex flex-col relative bg-white">
+      
+      @switch (currentState()) {
+        
+        @case ('SCAN') {
+          <app-scan-screen 
+            (imageSelected)="handleImageSelection($event)" 
+            class="flex-grow flex"
+          ></app-scan-screen>
+        }
+
+        @case ('PROCESSING') {
+          <div class="flex-grow flex flex-col items-center justify-center p-8 space-y-6 animate-pulse">
+            <div class="w-20 h-20 border-4 border-[#55c1e6] border-t-[#003366] rounded-full animate-spin"></div>
+            <div class="text-center">
+              <h3 class="text-[#003366] font-bold text-lg">Procesando Imagen...</h3>
+              <p class="text-gray-500 text-sm mt-2">Estamos analizando el recibo con IA.</p>
+            </div>
+          </div>
+        }
+
+        @case ('REVIEW') {
+          <app-review-screen
+            [data]="extractedData()"
+            [imageFile]="selectedFile()"
+            (saveData)="handleFinalSubmit($event)"
+            (cancel)="reset()"
+            class="flex-grow flex"
+          ></app-review-screen>
+        }
+
+        @case ('SUCCESS') {
+          <div class="flex-grow flex flex-col items-center justify-center p-8 text-center space-y-6">
+            <div class="w-24 h-24 bg-[#27c24c] rounded-full flex items-center justify-center shadow-lg">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <div>
+              <h2 class="text-[#003366] font-bold text-2xl">¡Enviado!</h2>
+              <p class="text-gray-500 mt-2">El ticket ha sido registrado correctamente en el ERP.</p>
+            </div>
+            <button 
+              (click)="reset()"
+              class="bg-[#003366] text-white px-8 py-3 font-bold uppercase tracking-wider hover:bg-[#002244] transition-colors mt-8"
+            >
+              Escanear Otro
+            </button>
+          </div>
+        }
+
+        @case ('ERROR') {
+          <div class="flex-grow flex flex-col items-center justify-center p-8 text-center space-y-6">
+            <div class="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mb-4">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <div>
+              <h2 class="text-red-600 font-bold text-xl">Ocurrió un error</h2>
+              <p class="text-gray-600 mt-2 text-sm">{{ errorMessage() }}</p>
+            </div>
+            <button 
+              (click)="reset()"
+              class="bg-[#003366] text-white px-8 py-3 font-bold uppercase tracking-wider hover:bg-[#002244] transition-colors"
+            >
+              Intentar de Nuevo
+            </button>
+          </div>
+        }
+
+      }
+    </main>
+
+  </div>
+
+  <!-- Footer Credit (Optional but nice for layout balance) -->
+  <div class="fixed bottom-4 text-white/60 text-xs">
+    Ticket Scanner App v1.0
+  </div>
+
+</div>
