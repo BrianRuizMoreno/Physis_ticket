@@ -19,8 +19,8 @@ type AppState = 'SCAN' | 'PROCESSING' | 'REVIEW' | 'SUCCESS' | 'ERROR';
         
         <!-- Header: Physis Blue Background -->
         <header class="bg-[#49a5c5] pt-4 pb-2 px-6 flex items-center justify-end z-20 shrink-0 h-[70px]">
-           <!-- Logo Directo (Sin contenedor blanco) -->
-           <img src="https://physis.com.ar/wp-content/uploads/2025/02/physis.png" width="80" alt="Physis Logo" class="opacity-100">
+           <!-- Logo Directo (Transparente sin contenedor) -->
+           <img src="https://physis.com.ar/wp-content/uploads/2025/02/physis.png" width="80" alt="Physis Logo" class="opacity-100 object-contain">
         </header>
 
         <!-- Dynamic Content Area -->
